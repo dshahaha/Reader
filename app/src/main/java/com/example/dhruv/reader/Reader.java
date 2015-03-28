@@ -5,8 +5,6 @@ package com.example.dhruv.reader;
  */
 
 import android.content.BroadcastReceiver;
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +14,11 @@ import android.widget.Toast;
 
 public class Reader extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
+        Log.i("ReaderDebug","Message Read");
         Bundle myBundle = intent.getExtras();
         SmsMessage[] messages = null;
-        String strMessage = "";
-        Log.i("smsRead", "Reading message");
+        String output = "";
+        Log.i("ReaderDebug", "Reading message");
 
         if (myBundle != null) {
             Sender sender = new Sender(context);
@@ -28,13 +27,13 @@ public class Reader extends BroadcastReceiver {
 
             for (int i = 0; i < messages.length; i++) {
                 messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                strMessage += "SMS From: " + messages[i].getOriginatingAddress();
-                strMessage += " : ";
-                strMessage += messages[i].getMessageBody();
-                strMessage += "\n";
+                output += "SMS From: " + messages[i].getOriginatingAddress();
+                output += " : ";
+                output += messages[i].getMessageBody();
+                output += "\n";
             }
             //sender.send(strMessage);
-            Toast.makeText(context, strMessage, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, output, Toast.LENGTH_LONG).show();
         }
 
     }
